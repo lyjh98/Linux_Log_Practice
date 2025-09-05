@@ -105,7 +105,8 @@
 | 주의 메시지 | fwupd /dev/sr0: No medium found | CD/DVD 없음, 무시 가능 |
 | 주의 메시지 | No MTA installed | CRON 메일 전송 실패, 무시 가능 |
 
-![image.png](attachment:3d993562-7a3a-4eea-b244-4f7c3cb86184:image.png)
+<img width="1577" height="857" alt="image" src="https://github.com/user-attachments/assets/7328be22-de91-4f3b-a6c2-e981c2b9f493" />
+
 
 전체 로그는 시스템 부팅, 서비스 재시작, CRON 작업 수행 과정에서 정상적으로 발생하는 이벤트가 대부분이며, 심각한 오류는 없음. 주의 메시지는 하드웨어/메일 환경 관련으로, 일반 서버 운영에는 큰 영향이 없음.
 
@@ -399,7 +400,8 @@ done
 
 시간 별 로그 접근 현황과 CPU 분석 결과
 
-![image.png](attachment:9acc7148-4209-411d-bff4-5c148fb6d9ae:image.png)
+<img width="1005" height="588" alt="1" src="https://github.com/user-attachments/assets/8f1bdd58-93a8-442f-a4c5-b5508a4cf248" />
+
 
 표로 정리한 내용
 
@@ -445,7 +447,8 @@ done
 
 ```
 
-![image.png](attachment:f355e0d2-73ec-4015-acc7-bcfbc6dd3040:image.png)
+<img width="748" height="368" alt="image" src="https://github.com/user-attachments/assets/d08b8f2b-de19-454d-87e2-74709207c586" />
+
 
 - 파란 선: 시간별 총 요청 수
 - 주황 선: CPU %sys
@@ -503,12 +506,10 @@ done
 - `/index.html`은 극소수
 - 로컬 `curl` 테스트 성격이 짙음 → 실제 부하 없음
 
+| web_log | CPU_log | csv |
+|----------|----------|----------|
+| <img width="908" height="872" alt="2" src="https://github.com/user-attachments/assets/8d2f1eac-187f-4981-b04b-be423668b3b3" /> | <img width="911" height="873" alt="3" src="https://github.com/user-attachments/assets/1d3a5c8e-8110-446b-afbc-182f5cc12fa7" /> | <img width="1180" height="932" alt="3png" src="https://github.com/user-attachments/assets/ed49fd9b-d3dc-43e1-9855-15cc04bc49fe" /> |
 
-![image.png](attachment:24138b2d-1f24-4548-94fa-4209a0ebd2de:image.png)
-
-![image.png](attachment:e22b746f-d47c-401d-8fa1-0647879cb27f:image.png)
-
-![image.png](attachment:b7873c27-59dc-4b19-a99e-44af9fa7f943:image.png)
 
 ### 4️⃣ 분석 내용
 
@@ -637,7 +638,7 @@ done
     
 
 
-### 4️⃣ 결론
+### 5️⃣ 결론
 
 - 서버 정상 작동 중이며 CPU, Load 모두 안정적
 - 현재 웹 트래픽은 테스트용 로컬 요청에 한정
