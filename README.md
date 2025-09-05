@@ -7,7 +7,7 @@
 
 
 
-## 1️⃣ 주제 기획
+## 주제 기획
 
 ### 목적
 
@@ -30,8 +30,8 @@
 - CPU, Memory, Disk, Network 사용량을 5분마다 수집해 CSV로 기록
 - → 추후 Grafana/Excel 시각화 연계 가능
 
-
-## 1. 시스템 서비스 관리 (systemd & snapd) 로그 개념
+<details>
+<summary><h2>1. 시스템 서비스 관리 (systemd & snapd) 로그 개념</h2></summary>
 
 ### 1-1. 시간 및 날짜 서비스
 
@@ -109,6 +109,10 @@
 
 
 전체 로그는 시스템 부팅, 서비스 재시작, CRON 작업 수행 과정에서 정상적으로 발생하는 이벤트가 대부분이며, 심각한 오류는 없음. 주의 메시지는 하드웨어/메일 환경 관련으로, 일반 서버 운영에는 큰 영향이 없음.
+
+</details>
+
+## 2. 프로젝트 실습
 
 ### 실습 흐름 요약
 
@@ -283,9 +287,10 @@ head -n 20 ~/logs/cpu_report_*.txt
 ```
 
 
-단일 서버 웹/CPU 로그 수집 및 분석
 
-트래픽 처리 스크립트
+## 단일 서버 웹/CPU 로그 수집 및 분석
+
+### 트래픽 처리 스크립트
 
 ```jsx
 #!/bin/bash
@@ -348,7 +353,7 @@ awk '{print $7}' "$LATEST_WEBLOG" | sort | uniq -c | sort -nr
 
 ```
 
-웹 로그 분석 모니터링 스크립트
+### 웹 로그 분석 모니터링 스크립트
 
 ```jsx
 #!/bin/bash
@@ -398,12 +403,13 @@ done
 
 ```
 
-시간 별 로그 접근 현황과 CPU 분석 결과
+### 시간 별 로그 접근 현황과 CPU 분석 결과
 
 <img width="1005" height="588" alt="1" src="https://github.com/user-attachments/assets/8f1bdd58-93a8-442f-a4c5-b5508a4cf248" />
 
 
-표로 정리한 내용
+
+### 표로 정리한 내용
 
 ```jsx
 | 시간    | URL 최다 접속   | 요청 수 | CPU 사용률(top, sy%) | CPU 평균(mpstat, %sys) | Load Average (1분) |
@@ -447,12 +453,22 @@ done
 
 ```
 
+
+
+### 그래프로 시각화
 <img width="748" height="368" alt="image" src="https://github.com/user-attachments/assets/d08b8f2b-de19-454d-87e2-74709207c586" />
 
 
 - 파란 선: 시간별 총 요청 수
 - 주황 선: CPU %sys
 - 빨간 선: Load Average 1분
+
+---
+
+
+
+<details>
+<summary><h2>4️⃣ 분석 내용</h2></summary>
 
 ### 1️⃣ 웹 트래픽 현황
 
@@ -510,14 +526,17 @@ done
 |----------|----------|----------|
 | <img width="908" height="872" alt="2" src="https://github.com/user-attachments/assets/8d2f1eac-187f-4981-b04b-be423668b3b3" /> | <img width="911" height="873" alt="3" src="https://github.com/user-attachments/assets/1d3a5c8e-8110-446b-afbc-182f5cc12fa7" /> | <img width="1180" height="932" alt="3png" src="https://github.com/user-attachments/assets/ed49fd9b-d3dc-43e1-9855-15cc04bc49fe" /> |
 
+---
 
-### 4️⃣ 분석 내용
+### 4️⃣ AWK 분석 결과
+
+
 
 ### 1. 총 요청 수
 
 파일의 전체 라인 수를 세어 총 요청 수를 파악합니다.
 
-- **명령어**:Bash
+- **명령어**:
     
     `awk 'END {print "총 요청 수: " NR}' access_processed.csv`
     
@@ -531,7 +550,7 @@ done
 
 웹사이트의 성공(200), 리디렉션(304), 오류(404) 등 상태 코드별로 요청 수를 확인합니다.
 
-- **명령어**:Bash
+- **명령어**:
     
     `awk -F"," 'NR > 1 {count[$6]++} END {for (code in count) print code, count[code]}' access_processed.csv`
     
@@ -547,7 +566,7 @@ done
 
 트래픽의 주요 원천인 IP 주소를 파악합니다.
 
-- **명령어**:Bash
+- **명령어**:
     
     `awk -F"," 'NR > 1 {print $1}' access_processed.csv | sort | uniq -c | sort -nr | head -10`
     
@@ -563,7 +582,7 @@ done
 
 주로 어떤 브라우저나 봇이 접속하는지 확인합니다.
 
-- **명령어**:Bash
+- **명령어**:
     
     `awk -F"," 'NR > 1 {print $8}' access_processed.csv | sort | uniq -c | sort -nr | head -5`
     
@@ -579,7 +598,7 @@ done
 
 사용자들이 가장 많이 방문한 페이지를 식별합니다.
 
-- **명령어**:Bash
+- **명령어**:
     
     `awk -F"," 'NR > 1 {print $4}' access_processed.csv | sort | uniq -c | sort -nr | head -5`
     
@@ -594,7 +613,7 @@ done
 
 하루 중 트래픽이 가장 많은 시간대를 파악합니다.
 
-- **명령어**:Bash
+- **명령어**:
     
     `awk -F"," 'NR > 1 {print substr($2, 13, 2)}' access_processed.csv | sort | uniq -c | sort -nr`
     
@@ -609,7 +628,7 @@ done
 
 더 세밀하게 트래픽이 집중된 분 단위를 파악합니다.
 
-- **명령어**:Bash
+- **명령어**:
     
     `awk -F"," 'NR > 1 {print substr($2, 13, 5)}' access_processed.csv | sort | uniq -c | sort -nr`
     
@@ -635,6 +654,8 @@ done
        2 11:31
        1 11:44
        1 11:30`
+
+  </details>
     
 
 
