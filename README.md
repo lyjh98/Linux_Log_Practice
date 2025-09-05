@@ -31,8 +31,8 @@ Linux Log Lab은 리눅스 환경에서 웹서버(Nginx)와 시스템 자원(CPU
 
 3. **서버 리소스 모니터링**
 
-- CPU, Memory, Disk, Network 사용량을 5분마다 수집해 CSV로 기록
-- → 추후 Grafana/Excel 시각화 연계 가능
+    - CPU, Memory, Disk, Network 사용량을 5분마다 수집해 CSV로 기록
+    - → 추후 Grafana/Excel 시각화 연계 가능
 
 ---
 
@@ -106,18 +106,47 @@ Linux Log Lab은 리눅스 환경에서 웹서버(Nginx)와 시스템 자원(CPU
 
 ## 5. 개념 종합 정리
 
-| 구분 | 내용 | 영향/조치 |
-| --- | --- | --- |
-| 정상 서비스 | systemd-timedated, snapd 서비스, t-news/apt-news/sysstat/fwupd 등 반복 수행 | 없음, 정상적 시스템 관리 활동 |
-| CRON | moda_collect_logs.sh, system_cron_summary.sh, debian-sa1 | 출력 메일 없음 → 영향 없음 |
-| 주의 메시지 | drm_fb_helper_damage_work CPU 점유 | GUI/그래픽 사용하지 않으면 무시 가능, 반복 시 모니터링 |
-| 주의 메시지 | fwupd /dev/sr0: No medium found | CD/DVD 없음, 무시 가능 |
-| 주의 메시지 | No MTA installed | CRON 메일 전송 실패, 무시 가능 |
+<table>
+<tr>
+<th>구분</th><th>내용</th><th>영향/조치</th>
+</tr>
+<tr>
+<tr>
+<td>정상 서비스</td>
+<td>systemd-timedated, snapd 서비스,<br>t-news/apt-news/sysstat/fwupd 등 반복 수행</td>
+<td>없음, 정상적 시스템 관리 활동</td>
+</tr>
+<tr>
+<td>CRON</td>
+<td style="white-space: nowrap;">moda_collect_logs.sh, system_cron_summary.sh, debian-sa1</td>
+<td style="white-space: nowrap;">출력 메일 없음 → 영향 없음</td>
+</tr>
+<tr>
+<td>주의 메시지</td>
+<td style="white-space: nowrap;">drm_fb_helper_damage_work CPU 점유</td>
+<td style="white-space: nowrap;">GUI/그래픽 사용하지 않으면 무시 가능, 반복 시 모니터링</td>
+</tr>
+<tr>
+<td>주의 메시지</td>
+<td style="white-space: nowrap;">fwupd /dev/sr0: No medium found</td>
+<td style="white-space: nowrap;">CD/DVD 없음, 무시 가능</td>
+</tr>
+<tr>
+<td>주의 메시지</td>
+<td style="white-space: nowrap;">No MTA installed</td>
+<td style="white-space: nowrap;">CRON 메일 전송 실패, 무시 가능</td>
+</tr>
+</table>
+
+
+
+
 
 <br>
 
 ### 기본 실습 로그기록
 <img width="1577" height="857" alt="image" src="https://github.com/user-attachments/assets/7328be22-de91-4f3b-a6c2-e981c2b9f493" />
+
 
 
 전체 로그는 시스템 부팅, 서비스 재시작, CRON 작업 수행 과정에서 정상적으로 발생하는 이벤트가 대부분이며, 심각한 오류는 없음. 주의 메시지는 하드웨어/메일 환경 관련으로, 일반 서버 운영에는 큰 영향이 없음.
@@ -210,11 +239,13 @@ done
 
 ```
 
+**권한 부여:**
+
 ```bash
 chmod +x ~/scripts/random_traffic.sh
 ```
 
-실행:
+**실행:**
 
 ```bash
 ~/scripts/random_traffic.sh
@@ -269,6 +300,8 @@ echo "Logs collected: $WEB_LOG_FILE , $CPU_LOG_FILE"
 
 ```
 
+**권한 부여:**
+
 ```bash
 chmod +x ~/scripts/collect_logs.sh
 ```
@@ -281,7 +314,7 @@ chmod +x ~/scripts/collect_logs.sh
 crontab -e
 ```
 
-추가:
+**crontab에 추가:**
 
 ```bash
 */1 * * * * /home/log_test/scripts/collect_logs.sh
