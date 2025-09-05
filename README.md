@@ -1,6 +1,6 @@
 # 🌟 단일 서버 웹/CPU 로그 수집 및 분석
 
-Linux Log Lab은 리눅스 환경에서 웹서버(Nginx)와 시스템 자원(CPU, Memory, Disk, Network) 로그를 직접 수집하고, 분석한 내용을 정리했습니다.
+Linux Log Lab은 리눅스 환경에서 웹서버(Nginx)와 시스템 자원(CPU, Memory, Disk, Network) 로그를 직접 수집하고, 분석한 내용을 정리함.
 
 <br>
 
